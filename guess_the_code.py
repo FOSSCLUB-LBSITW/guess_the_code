@@ -27,7 +27,7 @@ def check_guess(secret, guess):
     return result
 
 def play_game():
-    print("🔐 GUESS THE CODE")
+    print("🔐 WELCOME TO GUESS THE CODE!!")
     print("----------------")
     print("Guess the secret 4-digit code.")
     print()
@@ -60,11 +60,11 @@ def play_game():
         print()
 
         if guess == secret:
-            print("You cracked the code!")
+            print("Congratulations! You cracked the code!")
             print("Attempts:", attempts)
             return
 
-    print("Game over!")
+    print("Oops! Ran out of attempts. Game over!")
     print("The secret code was:", secret)
 
 
