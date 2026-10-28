@@ -1,0 +1,125 @@
+:root {
+  color-scheme: dark;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #f3f5f9;
+  background: #111827;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --muted: #929bad;
+  --green: #b6f36a;
+  --panel: #1b2433;
+  --line: #303a4b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 18% 42%, rgba(35, 57, 55, .32), transparent 42%),
+    radial-gradient(ellipse at 88% 8%, rgba(47, 51, 75, .3), transparent 34%),
+    #111827;
+}
+
+button, input, select { font: inherit; }
+button, select { -webkit-tap-highlight-color: transparent; }
+
+.page-shell { width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
+.topbar { height: 82px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(148, 163, 184, .12); }
+.brand { display: inline-flex; gap: 10px; align-items: center; color: #f4f6fb; text-decoration: none; font-size: 13px; font-weight: 700; letter-spacing: .14em; }
+.brand-mark { display: grid; width: 31px; height: 31px; place-items: center; border-radius: 9px; color: #111827; background: var(--green); font-size: 20px; letter-spacing: 0; }
+.status-pill { display: inline-flex; align-items: center; gap: 9px; color: #a7b0be; font-size: 12px; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px rgba(182, 243, 106, .6); }
+
+.game-layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(380px, 1fr); gap: clamp(48px, 9vw, 128px); align-items: center; max-width: 980px; margin: 78px auto 68px; }
+.intro { padding-bottom: 15px; }
+.eyebrow { margin: 0 0 15px; color: var(--green); font-size: 10px; font-weight: 700; letter-spacing: .2em; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { margin-bottom: 19px; font-family: "Trebuchet MS", sans-serif; font-size: clamp(45px, 5.2vw, 64px); font-weight: 600; letter-spacing: -.055em; line-height: 1.03; }
+h1 span { color: var(--green); }
+.intro-copy { max-width: 380px; margin-bottom: 42px; color: #a9b2c1; font-size: 14px; line-height: 1.8; }
+.how-to { max-width: 345px; padding-top: 22px; border-top: 1px solid rgba(148, 163, 184, .17); }
+.how-to h2 { margin-bottom: 18px; font-size: 12px; font-weight: 600; }
+.legend-item { display: flex; align-items: center; gap: 12px; margin: 12px 0; }
+.legend-mark { display: grid; width: 30px; height: 30px; flex: 0 0 30px; place-items: center; border-radius: 8px; font-size: 12px; font-weight: 700; }
+.legend-mark.correct { color: #c6ff8c; background: rgba(182, 243, 106, .13); }
+.legend-mark.misplaced { color: #ffd287; background: rgba(255, 190, 96, .13); }
+.legend-mark.absent { color: #aab4c3; background: rgba(148, 163, 184, .13); }
+.legend-item strong, .legend-item small { display: block; }
+.legend-item strong { margin-bottom: 3px; font-size: 12px; font-weight: 600; }
+.legend-item small { color: var(--muted); font-size: 11px; }
+
+.game-card { padding: 28px; border: 1px solid rgba(148, 163, 184, .16); border-radius: 16px; background: linear-gradient(145deg, rgba(31, 41, 57, .98), rgba(24, 33, 47, .98)); box-shadow: 0 24px 70px rgba(0, 0, 0, .22); }
+.card-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; }
+.card-heading .eyebrow { margin-bottom: 7px; font-size: 9px; }
+.card-heading h2 { margin: 0; font-family: "Trebuchet MS", sans-serif; font-size: 22px; letter-spacing: -.03em; }
+.lock-icon { color: var(--green); font-size: 24px; }
+.settings-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; color: #c4cbd6; font-size: 12px; }
+.settings-row select { max-width: 190px; padding: 9px 30px 9px 11px; border: 1px solid #394557; border-radius: 8px; outline: none; color: #e8ebf1; background: #202b3c; font-size: 11px; }
+.settings-row select:focus, .guess-row input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(182, 243, 106, .12); }
+.attempt-panel { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 22px; padding: 15px; border: 1px solid rgba(148, 163, 184, .11); border-radius: 10px; background: rgba(13, 20, 31, .3); }
+.metric-label { color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .13em; }
+.attempt-count { margin: 4px 0 0; font-family: "Trebuchet MS", sans-serif; font-size: 25px; font-weight: 600; line-height: 1; }
+.attempt-total { color: #7f8a9b; font-size: 14px; font-weight: 400; }
+.attempt-track { width: 48%; height: 5px; margin-bottom: 4px; overflow: hidden; border-radius: 6px; background: #374254; }
+.attempt-track span { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--green); transition: width .25s ease; }
+.input-label { display: block; margin-bottom: 9px; color: #e1e5eb; font-size: 11px; font-weight: 600; }
+.guess-row { display: flex; gap: 9px; }
+.guess-row input { width: 100%; min-width: 0; padding: 12px 14px; border: 1px solid #394557; border-radius: 8px; outline: none; color: #fff; background: #151e2c; font-size: 15px; letter-spacing: .12em; transition: border-color .15s, box-shadow .15s; }
+.guess-row input::placeholder { color: #697587; font-size: 12px; letter-spacing: 0; }
+.submit-button { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 12px; padding: 0 16px; border: 0; border-radius: 8px; color: #15200e; background: var(--green); cursor: pointer; font-size: 12px; font-weight: 700; transition: background .15s, transform .15s; }
+.submit-button:hover { transform: translateY(-1px); background: #c8ff85; }
+.submit-button:disabled { cursor: not-allowed; opacity: .55; transform: none; }
+.input-help { margin: 7px 0 0; color: #7f8a9b; font-size: 10px; }
+.message { min-height: 41px; margin-top: 16px; padding: 12px; border: 1px solid rgba(148, 163, 184, .12); border-radius: 8px; color: #bac3d0; background: rgba(13, 20, 31, .22); font-size: 11px; line-height: 1.5; }
+.message[data-kind="success"] { border-color: rgba(182, 243, 106, .3); color: #d3ffad; }
+.message[data-kind="error"] { border-color: rgba(255, 153, 135, .3); color: #ffb8aa; }
+.message[data-kind="info"] { border-color: rgba(255, 190, 96, .3); color: #ffd287; }
+.history-section { margin-top: 23px; }
+.history-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.history-heading h3 { margin: 0; font-size: 11px; font-weight: 600; }
+.history-heading > span { color: #798597; font-size: 9px; }
+.guess-history { display: grid; gap: 7px; max-height: 176px; margin: 0; padding: 0; overflow-y: auto; list-style: none; }
+.guess-history li { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border: 1px solid rgba(148, 163, 184, .1); border-radius: 7px; background: rgba(13, 20, 31, .2); }
+.history-guess { color: #f4f6fa; font-family: "Trebuchet MS", sans-serif; font-size: 14px; letter-spacing: .18em; }
+.feedback { display: flex; gap: 5px; }
+.feedback-mark { display: grid; width: 22px; height: 22px; place-items: center; border-radius: 6px; font-size: 9px; font-weight: 700; }
+.feedback-mark.correct { color: #c6ff8c; background: rgba(182, 243, 106, .13); }
+.feedback-mark.misplaced { color: #ffd287; background: rgba(255, 190, 96, .13); }
+.feedback-mark.absent { color: #aab4c3; background: rgba(148, 163, 184, .13); }
+.restart-button { display: block; width: 100%; margin-top: 17px; padding: 10px; border: 1px solid #3b4658; border-radius: 8px; color: #c5ccd7; background: transparent; cursor: pointer; font-size: 11px; font-weight: 600; transition: border-color .15s, color .15s; }
+.restart-button:hover { border-color: var(--green); color: var(--green); }
+.restart-button span { margin-right: 5px; font-size: 15px; }
+footer { padding: 0 0 27px; color: #707c8f; text-align: center; font-size: 10px; }
+footer span { padding: 0 4px; color: var(--green); }
+
+@media (max-width: 760px) {
+  .page-shell { width: min(100% - 34px, 510px); }
+  .topbar { height: 67px; }
+  .status-pill { max-width: 145px; font-size: 10px; }
+  .game-layout { grid-template-columns: 1fr; gap: 30px; margin: 42px auto 42px; }
+  .intro { padding: 0; }
+  h1 { margin-bottom: 13px; font-size: clamp(44px, 12vw, 58px); }
+  .intro-copy { max-width: 430px; margin-bottom: 22px; font-size: 13px; }
+  .how-to { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: none; padding-top: 15px; }
+  .how-to h2 { grid-column: 1 / -1; margin-bottom: 0; }
+  .legend-item { align-items: flex-start; gap: 7px; margin: 0; }
+  .legend-mark { width: 26px; height: 26px; flex-basis: 26px; }
+  .legend-item strong { font-size: 10px; }
+  .legend-item small { font-size: 9px; line-height: 1.4; }
+  .game-card { padding: 22px; }
+}
+
+@media (max-width: 390px) {
+  .page-shell { width: calc(100% - 24px); }
+  .brand { gap: 7px; font-size: 11px; }
+  .status-pill { max-width: 125px; font-size: 9px; }
+  .game-card { padding: 17px; }
+  .how-to { gap: 6px; }
+  .legend-item { gap: 5px; }
+  .legend-item small { font-size: 8px; }
+  .guess-row { gap: 6px; }
+  .submit-button { gap: 6px; padding: 0 11px; }
+}
