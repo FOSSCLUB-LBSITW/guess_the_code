@@ -9,11 +9,13 @@
   --green: #b6f36a;
   --panel: #1b2433;
   --line: #303a4b;
+  --lighting-darkness: 0;
 }
 
 * { box-sizing: border-box; }
 
 body {
+  position: relative;
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
@@ -23,10 +25,21 @@ body {
     #111827;
 }
 
+body::before {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 42%, transparent 8%, rgba(3, 5, 12, .92) 100%);
+  content: "";
+  opacity: var(--lighting-darkness);
+  pointer-events: none;
+  transition: opacity .65s ease;
+}
+
 button, input, select { font: inherit; }
 button, select { -webkit-tap-highlight-color: transparent; }
 
-.page-shell { width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
+.page-shell { position: relative; z-index: 1; width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
 .topbar { height: 82px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(148, 163, 184, .12); }
 .brand { display: inline-flex; gap: 10px; align-items: center; color: #f4f6fb; text-decoration: none; font-size: 13px; font-weight: 700; letter-spacing: .14em; }
 .brand-mark { display: grid; width: 31px; height: 31px; place-items: center; border-radius: 9px; color: #111827; background: var(--green); font-size: 20px; letter-spacing: 0; }
@@ -94,6 +107,10 @@ h1 span { color: var(--green); }
 .restart-button span { margin-right: 5px; font-size: 15px; }
 footer { padding: 0 0 27px; color: #707c8f; text-align: center; font-size: 10px; }
 footer span { padding: 0 4px; color: var(--green); }
+
+@media (prefers-reduced-motion: reduce) {
+  body::before { transition: none; }
+}
 
 @media (max-width: 760px) {
   .page-shell { width: min(100% - 34px, 510px); }
