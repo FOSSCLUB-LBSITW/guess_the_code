@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <title>Guess the Code</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+  <main class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Guess the Code home">
+        <span class="brand-mark" aria-hidden="true">⌘</span>
+        <span>CODEBREAKER</span>
+      </a>
+      <span class="status-pill"><span class="status-dot"></span> A little logic goes a long way</span>
+    </header>
+
+    <section class="game-layout" aria-labelledby="page-title">
+      <div class="intro">
+        <p class="eyebrow">THE NUMBER GAME</p>
+        <h1 id="page-title">Can you crack<br>the <span>code?</span></h1>
+        <p class="intro-copy">A secret code is waiting. Use the clues after each guess to figure it out before your attempts run out.</p>
+        <div class="how-to">
+          <h2>Read the clues</h2>
+          <div class="legend-item"><span class="legend-mark correct">C</span><span><strong>Correct</strong><small>Right digit, right place</small></span></div>
+          <div class="legend-item"><span class="legend-mark misplaced">W</span><span><strong>Misplaced</strong><small>Right digit, wrong place</small></span></div>
+          <div class="legend-item"><span class="legend-mark absent">X</span><span><strong>Not in code</strong><small>This digit isn't used</small></span></div>
+        </div>
+      </div>
+
+      <div class="game-card">
+        <div class="card-heading">
+          <div>
+            <p class="eyebrow">YOUR CHALLENGE</p>
+            <h2>Break the code</h2>
+          </div>
+          <span class="lock-icon" aria-hidden="true">▣</span>
+        </div>
+
+        <div class="settings-row">
+          <label for="difficulty">Difficulty</label>
+          <select id="difficulty" name="difficulty">
+            <option value="easy">Easy · 3 digits</option>
+            <option value="medium" selected>Medium · 4 digits</option>
+            <option value="hard">Hard · 5 digits</option>
+          </select>
+        </div>
+
+        <div class="attempt-panel">
+          <div>
+            <span class="metric-label">ATTEMPTS</span>
+            <p class="attempt-count"><span id="attempt-count">0</span><span class="attempt-total"> / <span id="attempt-total">10</span></span></p>
+          </div>
+          <div class="attempt-track" role="progressbar" aria-label="Attempts used" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
+            <span id="attempt-progress"></span>
+          </div>
+        </div>
+
+        <form id="guess-form" autocomplete="off">
+          <label class="input-label" for="guess-input">Your guess</label>
+          <div class="guess-row">
+            <input id="guess-input" name="guess" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" placeholder="Enter code" aria-describedby="input-help" required>
+            <button class="submit-button" type="submit">Guess <span aria-hidden="true">→</span></button>
+          </div>
+          <p id="input-help" class="input-help">Digits can't repeat.</p>
+        </form>
+
+        <div id="message" class="message" role="status" aria-live="polite">A new code is ready. Make your first guess!</div>
+
+        <section class="history-section" aria-labelledby="history-title">
+          <div class="history-heading"><h3 id="history-title">Guess history</h3><span id="history-empty">Your guesses will appear here</span></div>
+          <ol id="guess-history" class="guess-history"></ol>
+        </section>
+
+        <button id="restart-button" class="restart-button" type="button"><span aria-hidden="true">↻</span> Start a new game</button>
+      </div>
+    </section>
+    <footer>Made for curious minds <span aria-hidden="true">·</span> No luck needed, just logic.</footer>
+  </main>
+</body>
+</html>
