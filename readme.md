@@ -25,7 +25,7 @@ Requires Python 3.10 or later.
    ```
 4. Open http://127.0.0.1:5000.
 
-The web game offers Easy (3 digits, 10 attempts), Medium (4 digits, 10 attempts), and Hard (5 digits, 8 attempts). Codes and guesses use unique digits. The original terminal version remains available with `python guess_the_code.py`.
+The web game offers Easy (3 digits, 10 attempts), Medium (4 digits, 10 attempts), and Hard (5 digits, 8 attempts). Codes and guesses use unique digits. Incorrect guesses dim the ambient lighting; solving the code or starting a new game restores it. The original terminal version remains available with `python guess_the_code.py`.
 
 Active games are held in server memory, so restarting the app clears them. Use a single application process with this in-memory game store.
 

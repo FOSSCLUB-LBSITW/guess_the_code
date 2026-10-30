@@ -19,6 +19,10 @@ function showMessage(text, kind = "") {
 function updateGame(game) {
   attemptCount.textContent = game.attempts;
   attemptTotal.textContent = game.max_attempts;
+  const darkness = game.status === "won"
+    ? 0
+    : Math.min(game.attempts / game.max_attempts, 1) * 0.72;
+  document.documentElement.style.setProperty("--lighting-darkness", darkness);
   const progress = (game.attempts / game.max_attempts) * 100;
   attemptProgress.style.width = `${progress}%`;
   attemptTrack.setAttribute("aria-valuemax", game.max_attempts);
