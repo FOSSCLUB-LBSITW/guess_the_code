@@ -68,6 +68,12 @@
           <p id="input-help" class="input-help">Digits can't repeat.</p>
         </form>
 
+        <div class="game-actions">
+          <button id="hint-button" class="hint-button" type="button">Get a hint <span>· uses 1 attempt</span></button>
+          <span id="hint-count" class="hint-count" aria-live="polite">Hints used: 0</span>
+        </div>
+        <ul id="hint-history" class="hint-history" aria-label="Hints"></ul>
+
         <div id="message" class="message" role="status" aria-live="polite">A new code is ready. Make your first guess!</div>
 
         <section class="history-section" aria-labelledby="history-title">

@@ -22,6 +22,17 @@ def current_game():
     return GAMES.get(game_id)
 
 
+def available_hint_digits(game):
+    known_digits = set(game.get("hinted_digits", []))
+    for entry in game.get("history", []):
+        known_digits.update(
+            digit
+            for digit, marker in zip(entry["guess"], entry["feedback"])
+            if marker in ("C", "W")
+        )
+    return [digit for digit in game["secret"] if digit not in known_digits]
+
+
 def game_response(feedback=None):
     game = current_game()
     if game is None:
@@ -33,6 +44,9 @@ def game_response(feedback=None):
             "length": game["length"],
             "attempts": game["attempts"],
             "max_attempts": game["max_attempts"],
+            "hint_count": game.get("hint_count", 0),
+            "hints": game.get("hints", []),
+            "hint_available": bool(available_hint_digits(game)),
             "status": game["status"],
             "history": game.get("history", []),
         }
@@ -75,6 +89,9 @@ def new_game():
         "length": settings["length"],
         "max_attempts": settings["max_attempts"],
         "attempts": 0,
+        "hint_count": 0,
+        "hinted_digits": [],
+        "hints": [],
         "history": [],
         "secret": generate_code(settings["length"]),
         "status": "playing",
@@ -111,6 +128,35 @@ def submit_guess():
     elif game["attempts"] >= game["max_attempts"]:
         game["status"] = "lost"
     return jsonify(game_response(feedback))
+
+
+@app.post("/api/hint")
+def request_hint():
+    game = current_game()
+    if game is None:
+        return jsonify(error="Start a new game before requesting a hint."), 409
+    if game["status"] != "playing":
+        return jsonify(error="This game is over. Start a new game to play again."), 409
+    if game["attempts"] >= game["max_attempts"]:
+        return jsonify(error="No attempts remain. Start a new game to play again."), 409
+
+    hinted_digits = game.setdefault("hinted_digits", [])
+    available_digits = available_hint_digits(game)
+    if not available_digits:
+        return jsonify(error="No new digit clues remain."), 409
+
+    digit = secrets.choice(available_digits)
+    hinted_digits.append(digit)
+    game["hint_count"] = len(hinted_digits)
+    game["attempts"] += 1
+    if game["attempts"] >= game["max_attempts"]:
+        game["status"] = "lost"
+
+    hint = f"The code contains the digit {digit}, but this doesn't reveal its position."
+    game.setdefault("hints", []).append(hint)
+    response = game_response()
+    response["hint"] = hint
+    return jsonify(response)
 
 
 if __name__ == "__main__":

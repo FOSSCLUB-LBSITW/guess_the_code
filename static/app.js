@@ -9,7 +9,11 @@ const message = document.querySelector("#message");
 const historyList = document.querySelector("#guess-history");
 const historyEmpty = document.querySelector("#history-empty");
 const restartButton = document.querySelector("#restart-button");
+const hintButton = document.querySelector("#hint-button");
+const hintCount = document.querySelector("#hint-count");
+const hintHistory = document.querySelector("#hint-history");
 const submitButton = guessForm.querySelector("button");
+let currentGame = null;
 
 function showMessage(text, kind = "") {
   message.textContent = text;
@@ -17,6 +21,7 @@ function showMessage(text, kind = "") {
 }
 
 function updateGame(game) {
+  currentGame = game;
   attemptCount.textContent = game.attempts;
   attemptTotal.textContent = game.max_attempts;
   const progress = (game.attempts / game.max_attempts) * 100;
@@ -30,6 +35,14 @@ function updateGame(game) {
   const isPlaying = game.status === "playing";
   guessInput.disabled = !isPlaying;
   submitButton.disabled = !isPlaying;
+  hintCount.textContent = `Hints used: ${game.hint_count}`;
+  hintButton.disabled = !isPlaying || game.attempts >= game.max_attempts || !game.hint_available;
+  hintHistory.replaceChildren();
+  game.hints.forEach((hint) => {
+    const item = document.createElement("li");
+    item.textContent = hint;
+    hintHistory.append(item);
+  });
   difficultySelect.disabled = false;
 }
 
@@ -107,6 +120,24 @@ guessForm.addEventListener("submit", async (event) => {
     showMessage(error.message, "error");
   } finally {
     submitButton.disabled = guessInput.disabled;
+  }
+});
+
+hintButton.addEventListener("click", async () => {
+  hintButton.disabled = true;
+  try {
+    const data = await postJson("/api/hint", {});
+    updateGame(data.game);
+
+    if (data.game.status === "lost") {
+      showMessage(`No attempts left. The code was ${data.game.secret}. Start a new game to try again.`, "info");
+    } else {
+      showMessage("Hint added. One attempt has been used.");
+    }
+  } catch (error) {
+    showMessage(error.message, "error");
+  } finally {
+    if (currentGame) updateGame(currentGame);
   }
 });
 
